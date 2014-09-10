@@ -19,6 +19,8 @@ for c = 1:C
     
     % probability of finding each feature in the class p(fi|c)
     class_vectors = X(y==c,:);
+    
+    % alpha parameter is for dirichlet distribution
     p_fc(c,:) = (sum(class_vectors, 1) + alpha)/(sum(y==c) + C);
 end
 
@@ -31,6 +33,8 @@ for i = 1:T
     
     % pull out the ith test feature vector
     vec = Xtest(i,:);
+    
+    % initialize a probability vector
     prob = zeros(4,1);
     
     % find the probability of each class p(f|c)*p(c)
@@ -43,16 +47,17 @@ for i = 1:T
     
         % p(f|c)*p(c) 
         % because naive bayes assumes independence, we can just multiply
-        % each p(fi|c) to get p(f|c)
+        % each p(fi|c) to get p(f|c). cumprod should be faster than a loop.
         p_fnc = cumprod(p_fnc);
         
         % p(c|f) = p(f|c)*p(c)
         prob_fc = p_fnc(end) * p_y(c); 
         
-        % update the maximum likelihood
+        % update the likelihood vector
         prob(c) = prob_fc;
     end
     
+    % maximum likelihood
     [max_prob, best_class] = max(prob);
     yhat(i) = best_class;
       
@@ -63,6 +68,11 @@ testError = sum(yhat ~= ytest)/T;
 %% Ten most predictive words for each class
 best_words = containers.Map;
 for i = 1:C
+    
+    % Not sure about this method. We use both the positive and
+    % negative probabilities when classifying, so I considered
+    % the negative probability in finding the most predictive
+    % words.
     [sorted, index] = sort(max(p_fc(i,:), 1-p_fc(i,:)), 'descend');
     name = char(groupnames{i});
     splitted = strsplit(name,'.');

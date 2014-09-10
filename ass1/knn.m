@@ -16,8 +16,8 @@ for k = 1:10
     
     for i=1:N
         
-        % could have called sort outside of the loop, but wanted
-        % to make sure I had the right indicesx
+        % could have called sort outside of the loop, which should be faster,
+        % but I wanted to explicitly track the indices
         [sorted, index] = sort(closeness(:,i), 'ascend');
         values = y(index(1:k));
         class = mode(values);
@@ -28,7 +28,7 @@ for k = 1:10
 end
 
 
-testError = test_error
+testError = test_error;
 
 
 
