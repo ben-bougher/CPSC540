@@ -12,6 +12,14 @@ p_y = zeros(4,1); % We will store the probability of each class, p(y=c), in this
 % being in each class
 p_fc = zeros(C,P);
 
+% For normalizing
+if alpha > 0
+    class_norm = C;
+else
+    class_norm = 0.0;
+end
+
+
 %% Populate the probabilities
 for c = 1:C
     % probability of the class p(c)
@@ -21,8 +29,10 @@ for c = 1:C
     class_vectors = X(y==c,:);
     
     % alpha parameter is for dirichlet distribution
-    p_fc(c,:) = (sum(class_vectors, 1) + alpha)/(sum(y==c) + C);
+    p_fc(c,:) = (sum(class_vectors, 1) + alpha)/(sum(y==c) + class_norm);
 end
+
+
 
 
 %% Test extra-naive Bayes
