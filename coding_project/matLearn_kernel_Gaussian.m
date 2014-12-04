@@ -1,4 +1,6 @@
 function [model] = matLearn_kernel_Gaussian(options) 
+    % h will be the variance of the kernel, determines the amount of
+% contribution of neighbouring points.
     
     model.h = options.h;
     
