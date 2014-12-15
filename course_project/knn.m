@@ -1,6 +1,13 @@
 %% Load Data
-load('labeled_dat.mat') % Loads {X,y,Xtest,ytest,groupnames,wordlist}
+load('labeled_dat.mat') % Loads
+                        % {X,y,Xtest,ytest,groupnames,wordlist}
+
+%X = X(:,10:25);
+%Xtest = Xtest(:,10:25);
+
 [N,P] = size(X);
+
+
 
 C = max(y);
 
@@ -24,7 +31,7 @@ for k = 1:10
         classifications(i,k) = class;
     end
     
-    test_error(k) = sum(classifications(:,k) ~= ytest)/N; 
+    test_error(k) = sum(classifications(:,k) == ytest)/N; 
 end
 
 

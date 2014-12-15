@@ -1,0 +1,9 @@
+Rock Unit,start depth[m],end depth [m]
+,,
+Ordovician,,
+Kope,,
+PointPleasant,0.0,200.0
+TL,200.0,400.0
+BlackRiver,400.0,800.0
+GullRiver,800.0,1000.0
+WellsCreek,1000.0,1100.0
